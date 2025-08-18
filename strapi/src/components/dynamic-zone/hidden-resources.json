@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_dynamic_zone_hidden_resources",
+  "info": {
+    "displayName": "Hidden Resources",
+    "icon": "lock"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "items.resource-link"
+    }
+  }
+}

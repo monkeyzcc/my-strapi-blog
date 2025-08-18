@@ -8,6 +8,7 @@ import { Button } from "@/components/elements/button";
 import { Logo } from "@/components/logo";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import { LocaleSwitcher } from "../locale-switcher";
+import { useAuth } from "@/context/auth-context";
 
 type Props = {
   leftNavbarItems: {
@@ -100,14 +101,28 @@ export const MobileNavbar = ({ leftNavbarItems, rightNavbarItems, logo, locale }
             ))}
           </div>
           <div className="flex flex-row w-full items-start gap-2.5  px-8 py-4 ">
-            {rightNavbarItems.map((item, index) => (
-              <Button key={item.text} variant={index === rightNavbarItems.length - 1 ? 'primary' : 'simple'} as={Link} href={`/${locale}${item.URL}`}>
-                {item.text}
-              </Button>
-            ))}
+            <AuthActions locale={locale} />
           </div>
         </div>
       )}
     </div>
   );
 };
+
+const AuthActions = ({ locale }: { locale: string }) => {
+  const { isAuthenticated, loginWithWeChat, loginWithQQ, logout } = useAuth();
+  if (!isAuthenticated) {
+    return (
+      <div className="flex items-center gap-2">
+        <Button variant='simple' onClick={loginWithWeChat}>微信登录</Button>
+        <Button variant='simple' onClick={loginWithQQ}>QQ登录</Button>
+        <Button variant='primary' as={Link} href={`/${locale}/sign-up`}>注册</Button>
+      </div>
+    );
+  }
+  return (
+    <div className="flex items-center gap-2">
+      <Button variant='simple' onClick={logout}>退出登录</Button>
+    </div>
+  );
+}

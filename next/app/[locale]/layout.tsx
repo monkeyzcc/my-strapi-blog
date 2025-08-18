@@ -7,6 +7,7 @@ import { generateMetadataObject } from '@/lib/shared/metadata';
 import { Footer } from '@/components/footer';
 import { Navbar } from '@/components/navbar';
 import { CartProvider } from '@/context/cart-context';
+import { AuthProvider } from '@/context/auth-context';
 import { cn } from '@/lib/utils';
 import { ViewTransitions } from 'next-view-transitions';
 import fetchContentType from '@/lib/strapi/fetchContentType';
@@ -50,6 +51,7 @@ export default async function LocaleLayout({
         <html lang={locale}>
             <ViewTransitions>
                 <CartProvider>
+                    <AuthProvider>
                     <body
                         className={cn(
                             inter.className,
@@ -60,6 +62,7 @@ export default async function LocaleLayout({
                         {children}
                         <Footer data={pageData.footer} locale={locale} />
                     </body>
+                    </AuthProvider>
                 </CartProvider>
             </ViewTransitions>
         </html>

@@ -89,11 +89,21 @@ export default (config, { strapi }: { strapi: Core.Strapi }) => {
       const singular = pluralize.singular(contentType)
       const uid = `api::${singular}.${singular}`;
 
-      ctx.query.populate = {
+      const basePopulate = {
         // @ts-ignores 
         ...getDeepPopulate(uid),
         ...(!ctx.request.url.includes("products") && { localizations: { populate: {} } })
-      };
+      } as any;
+
+      // Hide hidden-resources links for unauthenticated requests
+      const isAuthenticated = Boolean(ctx.state.user) || Boolean(ctx.request?.header?.authorization);
+      if (!isAuthenticated && uid === 'api::article.article') {
+        if (basePopulate.dynamic_zone?.on) {
+          basePopulate.dynamic_zone.on['dynamic-zone.hidden-resources'] = { populate: { title: true, description: true } };
+        }
+      }
+
+      ctx.query.populate = basePopulate;
     }
     await next();
   };
