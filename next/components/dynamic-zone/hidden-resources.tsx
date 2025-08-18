@@ -36,7 +36,7 @@ export const HiddenResources: React.FC<HiddenResourcesProps> = ({ title, descrip
     if (!isAuthenticated || !slug) return;
     const fetchLinks = async () => {
       try {
-        const res = await fetch(`/api/hidden-resources?slug=${encodeURIComponent(slug)}&locale=${encodeURIComponent(locale)}`, {
+        const res = await fetch(`/api/hidden-resources?slug=${encodeURIComponent(slug)}`, {
           method: 'GET',
           credentials: 'include'
         });

@@ -19,15 +19,10 @@ const inter = Inter({
 });
 
 // Default Global SEO for pages without them
-export async function generateMetadata({
-    params,
-}: {
-    params: { locale: string; slug: string };
-}): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
     const pageData = await fetchContentType(
         'global',
         {
-            filters: { locale: params.locale },
             populate: "seo.metaImage",
         },
         true
@@ -46,9 +41,9 @@ export default async function LocaleLayout({
     params: { locale: string };
 }) {
 
-    const pageData = await fetchContentType('global', { filters: { locale } }, true);
+    const pageData = await fetchContentType('global', {}, true);
     return (
-        <html lang={locale}>
+        <html lang={'zh'}>
             <ViewTransitions>
                 <CartProvider>
                     <AuthProvider>
@@ -58,7 +53,7 @@ export default async function LocaleLayout({
                             "bg-charcoal antialiased h-full w-full"
                         )}
                     >
-                        <Navbar data={pageData.navbar} locale={locale} />
+                        <Navbar data={pageData.navbar} locale={'zh'} />
                         {children}
                         <Footer data={pageData.footer} locale={locale} />
                     </body>
