@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_items_resource_links",
+  "info": {
+    "displayName": "Resource Link",
+    "icon": "attachment"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "password": {
+      "type": "string"
+    }
+  }
+}
