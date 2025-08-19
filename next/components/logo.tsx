@@ -10,7 +10,7 @@ export const Logo = ({ image, locale }: { image?: Image, locale?: string }) => {
   if (image) {
     return (
       <Link
-        href={`/${locale || 'en'}`}
+        href={`/`}
         className="font-normal flex space-x-2 items-center text-sm mr-4  text-black   relative z-20"
       >
         <BlurImage

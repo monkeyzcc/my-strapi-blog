@@ -1,5 +1,7 @@
 export interface Category {
   name: string;
+  parent?: Category | null;
+  children?: Category[];
 }
 
 export interface Image {
@@ -19,6 +21,7 @@ export interface Article {
   locale: string;
   image: Image;
   categories: Category[]
+  views?: number;
 }
 
 export interface Product {

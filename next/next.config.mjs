@@ -13,8 +13,8 @@ const nextConfig = {
       const result = await res.json();
       const redirectItems = result.data.map(({ source, destination }) => {
         return {
-          source: `/:locale${source}`,
-          destination: `/:locale${destination}`,
+          source: `${source}`,
+          destination: `${destination}`,
           permanent: false,
         };
       });

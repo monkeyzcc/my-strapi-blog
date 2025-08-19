@@ -16,7 +16,6 @@ export default async function SingleArticlePage({
     {
       filters: {
         slug: params.slug,
-        locale: params.locale,
       }
     },
     true,
@@ -26,17 +25,8 @@ export default async function SingleArticlePage({
     return <div>Blog not found</div>;
   }
 
-  const localizedSlugs = article.localizations?.reduce(
-    (acc: Record<string, string>, localization: any) => {
-      acc[localization.locale] = localization.slug;
-      return acc;
-    },
-    { [params.locale]: params.slug }
-  );
-
   return (
-    <BlogLayout article={article} locale={params.locale}>
-      <ClientSlugHandler localizedSlugs={localizedSlugs} />
+    <BlogLayout article={article} locale={'zh'}>
       <BlocksRenderer content={article.content} />
     </BlogLayout>
   );

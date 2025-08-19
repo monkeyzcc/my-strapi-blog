@@ -4,9 +4,8 @@ import qs from "qs";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const slug = searchParams.get("slug");
-  const locale = searchParams.get("locale");
-  if (!slug || !locale) {
-    return new Response(JSON.stringify({ error: "Missing slug or locale" }), { status: 400 });
+  if (!slug) {
+    return new Response(JSON.stringify({ error: "Missing slug" }), { status: 400 });
   }
 
   const jwt = cookies().get('strapi_jwt')?.value;
@@ -16,7 +15,7 @@ export async function GET(request: Request) {
 
   const url = new URL(`api/articles`, process.env.NEXT_PUBLIC_API_URL);
   const query = qs.stringify({
-    filters: { slug, locale },
+    filters: { slug },
     populate: {
       dynamic_zone: {
         populate: {

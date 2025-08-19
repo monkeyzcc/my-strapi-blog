@@ -13,16 +13,9 @@ import { generateMetadataObject } from '@/lib/shared/metadata';
 
 import ClientSlugHandler from '../ClientSlugHandler';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { locale: string };
-}): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
 
   const pageData = await fetchContentType("product-page", {
-    filters: {
-      locale: params.locale,
-    },
     populate: "seo.metaImage",
   }, true)
 
@@ -31,32 +24,17 @@ export async function generateMetadata({
   return metadata;
 }
 
-export default async function Products({
-  params,
-}: {
-  params: { locale: string };
-}) {
+export default async function Products() {
 
   // Fetch the product-page and products data
-  const productPage = await fetchContentType('product-page', {
-    filters: {
-      locale: params.locale,
-    },
-  }, true);
+  const productPage = await fetchContentType('product-page', {}, true);
   const products = await fetchContentType('products');
 
-  const localizedSlugs = productPage.localizations?.reduce(
-    (acc: Record<string, string>, localization: any) => {
-      acc[localization.locale] = "products";
-      return acc;
-    },
-    { [params.locale]: "products" }
-  );
   const featured = products?.data.filter((product: { featured: boolean }) => product.featured);
 
   return (
     <div className="relative overflow-hidden w-full">
-      <ClientSlugHandler localizedSlugs={localizedSlugs} />
+      {/* i18n removed */}
       <AmbientColor />
       <Container className="pt-40 pb-40">
         <FeatureIconContainer className="flex justify-center items-center overflow-hidden">
@@ -68,8 +46,8 @@ export default async function Products({
         <Subheading className="max-w-3xl mx-auto">
           {productPage.sub_heading}
         </Subheading>
-        <Featured products={featured} locale={params.locale} />
-        <ProductItems products={products?.data} locale={params.locale} />
+        <Featured products={featured} locale={'zh'} />
+        <ProductItems products={products?.data} locale={'zh'} />
       </Container>
     </div>
   );

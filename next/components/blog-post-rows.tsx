@@ -49,7 +49,7 @@ export const BlogPostRows = ({ articles }: { articles: Article[] }) => {
 export const BlogPostRow = ({ article }: { article: Article }) => {
   return (
     <Link
-      href={`blog/${article.slug}`}
+      href={`/zh/blog/${article.slug}`}
       key={`${article.slug}`}
       className="flex md:flex-row flex-col items-start justify-between md:items-center group py-4"
     >
